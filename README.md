@@ -2,12 +2,9 @@
 Access a database of cocktails and their ingredients on your devices.
 
 ---
-#### Installation
-###### `npm i`
-#
-#
+### Installation
+##### `npm i`
 ---
-#### Usage
-###### `npm run start`
-#
-###### `npm run web`
+### Usage
+##### `npm run start`
+##### `npm run web`
