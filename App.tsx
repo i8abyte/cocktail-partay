@@ -1,11 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import FilterBySpirit from './components/FilterBySpirit';
 
-export default function App() {
+const App = () => {
+  const Separator = () => (
+    <View style={styles.separator} />
+  );
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <View style={styles.container}>
+        <Text>Ideas for your classy (or trashy) cocktail celebrations!</Text>
+        <StatusBar style="auto" />
+        <Separator />
+      </View>
+      <FilterBySpirit />
     </View>
   );
 }
@@ -17,4 +26,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
 });
+
+export default App;
