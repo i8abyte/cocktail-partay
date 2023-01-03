@@ -8,15 +8,28 @@ import Drink from '../interfaces/Drink';
 type DrinkList = Drink[]
 
 const FilterBySpirit = () => {
-  const [text, onChangeText] = React.useState("");
+  const [inputText, setInputText] = useState<string>("");
   const [drinks, setDrinks] = useState<DrinkList>([]);
+  const [drinksHeaderVisibility, setDrinksHeasderVisibility] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
 
   const getDrinks = async (ingredient: string) => {
     try {
       const res = await axios.get(COCKTAIL_URL + ingredient);
       setDrinks(res.data.drinks);
-    } catch (error) {
-      console.log(error);
+      setDrinksHeasderVisibility(true);
+      setError(null);
+    } catch (err: any) {
+      setError(err);
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        console.log(error.request);
+      } else {
+        console.log("Error", error.message);
+      }
     }
   }
 
@@ -25,14 +38,16 @@ const FilterBySpirit = () => {
       <Text>Enter a spirit</Text>
       <TextInput 
         style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
+        onChangeText={setInputText}
+        value={inputText}
       />
 
       <Button
         title="Search"
-        onPress={() => getDrinks(text)}
+        onPress={() => { getDrinks(inputText) }}
       />
+
+      { drinksHeaderVisibility && <Text style={styles.item}>Drinks</Text> }
 
       <FlatList 
         data={drinks}
@@ -49,7 +64,6 @@ const FilterBySpirit = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
