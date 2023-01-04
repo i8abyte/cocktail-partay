@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, SafeAreaView, Button, FlatList } from 'react-native';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { COCKTAIL_URL, GOOGLE_SEARCH_URL } from '../utils/constants/urls';
 import Drink from '../interfaces/Drink';
@@ -11,24 +11,15 @@ const FilterBySpirit = () => {
   const [inputText, setInputText] = useState<string>("");
   const [drinks, setDrinks] = useState<DrinkList>([]);
   const [drinksHeaderVisibility, setDrinksHeasderVisibility] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
 
   const getDrinks = async (ingredient: string) => {
     try {
       const res = await axios.get(COCKTAIL_URL + ingredient);
       setDrinks(res.data.drinks);
       setDrinksHeasderVisibility(true);
-      setError(null);
-    } catch (err: any) {
-      setError(err);
-      if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log("Error", error.message);
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) {
+        console.log("Error when making a GET request to TheCocktailDB with Axios", err.toJSON());
       }
     }
   }
