@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, SafeAreaView, Button, FlatList } from 'react-native';
+import { StyleSheet, Text, TextInput, SafeAreaView, Button, FlatList, Image } from 'react-native';
 import axios, { AxiosError } from 'axios';
 
 import { COCKTAIL_URL, GOOGLE_SEARCH_URL } from '../utils/constants/urls';
@@ -38,14 +38,20 @@ const FilterBySpirit = () => {
         onPress={() => { getDrinks(inputText) }}
       />
 
-      { drinksHeaderVisibility && <Text style={styles.item}>Drinks</Text> }
+      { drinksHeaderVisibility && <Text style={styles.drinksHeader}>Drinks</Text> }
 
       <FlatList 
         data={drinks}
-        keyExtractor={(drink) => drink.strDrink}
+        keyExtractor={(drink) => (drink.strDrink, drink.strDrinkThumb)}
         renderItem={({ item }) => (
           <SafeAreaView style={styles.item}>
-            <Text>{item.strDrink}</Text>
+            <Text style={styles.text}>{item.strDrink}</Text>
+            <Image
+              style={styles.image}
+              source={{
+                uri: item.strDrinkThumb
+              }}
+            />
           </SafeAreaView>
         )}
       />
@@ -65,11 +71,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+  drinksHeader: {
+    paddingTop: 50,
+    paddingBottom: 25
+  },
   item: {
-    padding: 20,
+    paddingBottom: 20,
     marginVertical: 8,
     marginHorizontal: 16,
   },
+  text: {
+    textAlign: 'center',
+    paddingTop: 20
+  },
+  image: {
+    height: 200,
+    width: 'auto',
+    paddingBottom: 75
+  }
 });
 
 export default FilterBySpirit;
