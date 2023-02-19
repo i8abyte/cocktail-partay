@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, SafeAreaView, Button, FlatList, Image } from 'react-native';
 import axios, { AxiosError } from 'axios';
 
-import { COCKTAIL_URL, GOOGLE_SEARCH_URL } from '../utils/constants/urls';
+import { COCKTAIL_URL, GOOGLE_SEARCH_URL } from '../utils/constants/url';
 import Drink from '../interfaces/Drink';
 
 type DrinkList = Drink[]
