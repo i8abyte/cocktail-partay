@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, SafeAreaView, Button, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, TextInput, SafeAreaView, Button, FlatList, Image, Linking } from 'react-native';
 import axios, { AxiosError } from 'axios';
 
 import { COCKTAIL_URL, GOOGLE_SEARCH_URL } from '../utils/constants/url';
@@ -45,7 +45,10 @@ const FilterBySpirit = () => {
         keyExtractor={(drink) => (drink.strDrink, drink.strDrinkThumb)}
         renderItem={({ item }) => (
           <SafeAreaView style={styles.item}>
-            <Text style={styles.text}>{item.strDrink}</Text>
+            <Text style={styles.text}
+                  onPress={() => Linking.openURL(GOOGLE_SEARCH_URL + item.strDrink)}>
+              {item.strDrink}
+            </Text>
             <Image
               style={styles.image}
               source={{
